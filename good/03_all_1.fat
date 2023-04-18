@@ -1,0 +1,14 @@
+int x = 1;
+int y = 2;
+int z = x + y;
+printInt(z);
+
+string x = "Hello";
+string y = "World";
+string z = x + " " + y;
+printString(z);
+
+bool z = !true;
+bool z = true && false;
+bool z = true || false;
+printBool(z);

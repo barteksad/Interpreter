@@ -1,0 +1,9 @@
+bool x = true;
+bool z = !x;
+bool y = x && z;
+
+if(!x && y || z) {
+  # do something
+} else {
+  printString("Hello World");
+}

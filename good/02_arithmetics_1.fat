@@ -1,0 +1,16 @@
+int x = 1, y;
+y = x + 1;
+y = y + 2;
+printInt(y);
+
+bool x = true;
+bool y = false;
+bool z = x && y;
+z = z || x;
+z = !z;
+printBool(z);
+
+string x = "Hello";
+string y = "World";
+string z = x + " " + y + "!";
+printString(z);

@@ -1,0 +1,13 @@
+bool x = 1 == (1 / 2);
+
+if (x) {
+  printString("true");
+} else {
+  printString("false");
+}
+
+int i = 0
+while (i < 3) {
+  i = i + 1;
+  printInt(x);
+}

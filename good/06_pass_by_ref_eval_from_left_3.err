@@ -1,0 +1,12 @@
+int sum_to_n(ref int n) {
+  n = n - 1;
+  int ret_val = 0;
+  if(n <= 0) {
+    ret_val = 0;
+  } else {
+    ret_val = 1 + n + sum_to_n(n);
+  }
+  return ret_val;
+}
+
+printInt(sum_to_n(5));

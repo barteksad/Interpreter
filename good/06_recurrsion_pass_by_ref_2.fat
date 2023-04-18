@@ -1,0 +1,20 @@
+int counter_increment(ref int x, int n_times, ref bool success) {
+  int count = 0;
+  if(n_times > 0) {
+    x++;
+    count = count + counter_increment(x, n_times - 1, success);
+  }
+  else {
+    success = true;
+  }
+  return count;
+}
+
+int x = 0;
+int n_times = 10;
+bool success = false;
+
+int count = counter_increment(x, n_times, success);
+printInt(x);
+printInt(count);
+printBool(success);
