@@ -1,0 +1,10 @@
+int x = 0;
+
+int f() {
+  return x;
+}
+
+string x = "hello";
+
+printInt(f());
+printString(x);

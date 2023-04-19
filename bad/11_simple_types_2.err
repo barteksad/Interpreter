@@ -1,0 +1,1 @@
+Error at line 2,column 13:Type missmatch in function call. Expected type string but got type bool.

@@ -1,0 +1,5 @@
+int f(int x, ref string s) {
+  return 0;
+}
+
+f("Ala ma kota", 0);

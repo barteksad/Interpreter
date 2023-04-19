@@ -1,0 +1,19 @@
+int() create_incrementer(ref int x, int n, int max_val) {
+  return () => int { 
+    x = x + n;
+    if (x > max_val) {
+      x = max_val;
+    }
+    return 0;
+  };
+}
+
+int x = 0;
+int n = 2;
+int max_val = 10;
+int() incrementer = create_incrementer(x, n, max_val);
+
+while (x < max_val) {
+  incrementer();
+  printInt(x);
+}

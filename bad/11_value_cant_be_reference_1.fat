@@ -1,0 +1,5 @@
+int(ref string, int) f(bool b, ref int x) {
+  return (ref string a, int b) => int { return 0; };
+}
+
+f(false, 1);

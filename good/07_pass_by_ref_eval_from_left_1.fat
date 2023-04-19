@@ -1,0 +1,27 @@
+int sum_to_n(ref int n) {
+  n = n - 1;
+  int ret_val = 0;
+  if(n <= 0) {
+    ret_val = 1;
+  } else {
+    ret_val = 1 + n + sum_to_n(n);
+  }
+  return ret_val;
+}
+
+int n = 5
+printInt(sum_to_n(x));
+
+int not_sum_to_n(ref int n) {
+  n = n - 1;
+  int ret_val = 0;
+  if(n <= 0) {
+    ret_val = 1;
+  } else {
+    ret_val = 1 + sum_to_n(n) + n;
+  }
+  return ret_val;
+}
+
+int n = 5
+printInt(not_sum_to_n(x));

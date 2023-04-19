@@ -1,0 +1,27 @@
+int(ref string, bool) f() {
+
+  int(ref string, bool) inner1 = (ref string x, bool b) => int {
+    x = "Hello World";
+    b = true;
+    return 1;
+  };
+
+  int(ref string, bool) outer1(){
+    return inner1;
+  }
+
+  int(ref string, bool)() outer2 = () => int(ref string, bool) {
+    return outer1();
+  };
+
+  return outer2();
+}
+
+int(ref string, bool) f = f();
+
+string x = "";
+bool b = false;
+
+if(!b) {
+  printString(x);
+}

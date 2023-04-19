@@ -1,6 +1,6 @@
 module Main where
 
-import Prelude ( IO, getContents, ($), String, Show )
+import Prelude ( IO, getContents, ($), String, Show, putStr )
 import Data.Either
 
 import ParGramatyka ( pProgram, myLexer )
@@ -9,7 +9,7 @@ import PrintGramatyka ( Print )
 
 import TypeCheck ( typeCheck )
 import System.Exit (exitFailure)
-import System.IO (putStrLn)
+import System.IO (putStrLn, hPutStrLn, stderr)
 import AbsGramatyka (Program)
 
 type Err      = Either String
@@ -19,18 +19,14 @@ runTypeCheck :: ParseFun -> String -> IO ()
 runTypeCheck p s =
   case p ts of
     Left err -> do
-      putStrLn "\nParse              Failed...\n"
-      putStrLn err
+      hPutStrLn stderr err
       exitFailure
     Right tree -> do
-      putStrLn "\nParse Successful!"
       case typeCheck tree of
         Left err -> do
-          putStrLn "\nTypeCheck          Failed...\n"
-          putStrLn err
+          hPutStrLn stderr err
           exitFailure
-        Right _ -> do
-          putStrLn "\nTypeCheck          Successful!"
+        Right _ -> putStr ""
   where
   ts = myLexer s
 

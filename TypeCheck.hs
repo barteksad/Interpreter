@@ -145,10 +145,11 @@ typeOfIdent p i = do
 typeCheckItem :: TypeT -> Item -> TypeMonad ()
 typeCheckItem t (Init p i v) = do
   t' <- typeOf v
+  i <- return $ unpacVar i
   if t == t'
     then do
-      modify $ insert (unpacVar i) t
-    else throwError $ show p ++ " Type mismatch in initialization of " ++ show i ++ ".\nVariable has type " ++ show t ++ " but expression has type " ++ show t' ++ "."
+      modify $ insert i t
+    else throwError $ show p ++ " Type mismatch in initialization of " ++ show i ++ ". Variable has type " ++ show t ++ " but expression has type " ++ show t' ++ "."
 typeCheckItem t (NoInit p i) = do
   modify $ insert (unpacVar i) t
 
@@ -157,7 +158,7 @@ typeCheckRet t (Ret p v) = do
   t' <- typeOf v
   if t == t'
     then return ()
-    else throwError $ show p ++ " Type mismatch in return statement.\nFunction has type " ++ show t ++ " but expression has type " ++ show t' ++ "."
+    else throwError $ show p ++ " Type mismatch in return statement. Function has type " ++ show t ++ " but expression has type " ++ show t' ++ "."
 
 typeCheckFBlock :: TypeT -> FBlock -> TypeMonad ()
 typeCheckFBlock t (FBlock p stmts ret) = do
@@ -185,7 +186,7 @@ typeCheckArg (FArgR _ t) (EVar p i) = do
   unless (t == t') $
     throwError $ show p ++ "Type missmatch in function call. Expected type " ++ show t ++ " but got type " ++ show t' ++ "."
 typeCheckArg (FArgR _ t) e = do
-  throwError $ show (hasPosition e) ++ " Function expects reference but got expression."
+  throwError $ show (hasPosition e) ++ " Function expects reference but got value."
 typeOf :: Expr -> TypeMonad TypeT
 
 typeOf (LamDef _ args rt body) = do
@@ -276,6 +277,20 @@ typeOf (EOr p e1 e2) = do
   unless (t2 == Bool ()) $
     throwError $ show p ++ " Right operand of or must be of type bool but it's type is: " ++ show t2
   return $ Bool ()
+
+---------------------
+--- Printing stuff ---
+---------------------
+
+instance {-# OVERLAPPING #-} Show TypeT where
+  show (Int ()) = "int"
+  show (Bool ()) = "bool"
+  show (Str ()) = "string"
+  show (Fun () t args) = show t ++ "(" ++ show args ++ ")"
+
+instance {-# OVERLAPPING #-} Show ATypeT where
+  show (FArgV _ t) = show t
+  show (FArgR _ t) = "ref " ++ show t
 
 instance {-# OVERLAPPING #-} Show BNFC'Position where
   show (Just (l, r)) = "Error at line " ++ show l ++ ",column " ++ show r ++ ":"
