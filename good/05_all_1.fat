@@ -1,4 +1,4 @@
-bool x = 1 == (1 / 2);
+bool x = 1 == (1 / 1);
 
 if (x) {
   printString("true");
@@ -6,8 +6,8 @@ if (x) {
   printString("false");
 }
 
-int i = 0
+int i = 0;
 while (i < 3) {
-  i = i + 1;
-  printInt(x);
+  i++;
+  printInt(i);
 }

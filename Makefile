@@ -27,7 +27,7 @@ AbsGramatyka.hs LexGramatyka.x ParGramatyka.y PrintGramatyka.hs TestGramatyka.hs
 %.hs : %.x
 	${ALEX} ${ALEX_OPTS} $<
 
-Interpreter : Interpreter.hs TypeCheck.hs AbsGramatyka.hs LexGramatyka.hs ParGramatyka.hs PrintGramatyka.hs TestGramatyka.hs
+Interpreter : Interpreter.hs Run.hs TypeCheck.hs AbsGramatyka.hs LexGramatyka.hs ParGramatyka.hs PrintGramatyka.hs TestGramatyka.hs
 	${GHC} ${GHC_OPTS} $@
 
 # Rules for cleaning generated files.

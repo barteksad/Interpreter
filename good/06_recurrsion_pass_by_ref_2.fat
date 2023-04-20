@@ -2,7 +2,7 @@ int counter_increment(ref int x, int n_times, ref bool success) {
   int count = 0;
   if(n_times > 0) {
     x++;
-    count = count + counter_increment(x, n_times - 1, success);
+    count = 1 + count + counter_increment(x, n_times - 1, success);
   }
   else {
     success = true;

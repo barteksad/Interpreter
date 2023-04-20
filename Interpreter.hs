@@ -1,21 +1,24 @@
 module Main where
 
-import Prelude ( IO, getContents, ($), String, Show, putStr )
-import Data.Either
-
-import ParGramatyka ( pProgram, myLexer )
-import LexGramatyka ( Token )
-import PrintGramatyka ( Print )
-
-import TypeCheck ( typeCheck )
-import System.Exit (exitFailure)
-import System.IO (putStrLn, hPutStrLn, stderr)
 import AbsGramatyka (Program)
+import Data.Either
+import LexGramatyka (Token)
+import ParGramatyka (myLexer, pProgram)
+import PrintGramatyka (Print)
+import Run (Output, run)
+import System.Exit (exitFailure)
+import System.IO (hPutStrLn, putStrLn, stderr)
+import TypeCheck (typeCheck)
+import Prelude (Foldable (foldl), IO, Monad (return, (>>)), Show, String, concat, getContents, map, mapM_, putStr, ($), (.), reverse)
+import Data.List ((++), unlines)
 
-type Err      = Either String
+type Err = Either String
+
 type ParseFun = [Token] -> Err Program
 
-runTypeCheck :: ParseFun -> String -> IO ()
+type RunFn = Program -> Err Output
+
+runTypeCheck :: ParseFun -> String -> IO Program
 runTypeCheck p s =
   case p ts of
     Left err -> do
@@ -26,11 +29,20 @@ runTypeCheck p s =
         Left err -> do
           hPutStrLn stderr err
           exitFailure
-        Right _ -> putStr ""
+        Right _ -> return tree
   where
-  ts = myLexer s
+    ts = myLexer s
+
+runRun :: RunFn -> Program -> IO ()
+runRun r p =
+  case r p of
+    Left err -> do
+      hPutStrLn stderr err
+      exitFailure
+    Right s -> putStr $ unlines (reverse s)
 
 main :: IO ()
 main = do
   content <- getContents
-  runTypeCheck pProgram content
+  program <- runTypeCheck pProgram content
+  runRun run program

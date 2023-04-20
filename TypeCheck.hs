@@ -3,14 +3,11 @@ module TypeCheck where
 
 import AbsGramatyka
 
-import Control.Monad.Reader
 import Control.Monad.Except
 import Control.Monad.Identity
 import Control.Monad.State
     ( modify, evalStateT, MonadState(get), StateT )
 import Data.Map
-import LexGramatyka (Token, mkPosToken)
-import ParGramatyka (myLexer, pProgram)
 import Control.Monad.State.Lazy
 
 ------------------------------------------------------------
