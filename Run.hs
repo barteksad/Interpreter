@@ -1,6 +1,10 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 module Run where
 
-import AbsGramatyka qualified as Abs
+import qualified AbsGramatyka as Abs
 import Control.Monad.Except
 import Control.Monad.Identity
 import Control.Monad.State
