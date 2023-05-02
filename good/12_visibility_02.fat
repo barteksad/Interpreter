@@ -1,0 +1,46 @@
+
+int x = 0;
+int n = 0;
+string s = "";
+
+int() increment = () => int {
+	x = x + n;
+	return x;
+};
+
+increment();
+printInt(x);
+
+n = 1;
+increment(); # x = 1
+printInt(x);
+
+{
+	int x = -999 + n;
+	int n = 100;
+	n = 200;
+	increment(); # x = 2
+	printInt(x);
+}
+
+increment(); # x = 3
+printInt(x);
+
+int(int()) nested = (int() f) => int {
+	int x = 1000;
+	int n = 1000;
+	increment(); # x = 4
+	f(); # x = 5
+
+	int() increment = () => int {
+		x = x + n;
+		return x;
+	};
+	increment(); # local x = 2000
+	printInt(x);
+	return x;
+};
+
+nested(increment);
+increment(); # x = 6
+printInt(x);

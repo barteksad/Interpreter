@@ -1,0 +1,20 @@
+
+int f(string() f2, bool b, int x) {
+	printString(f2());
+	if(!b) {
+		printInt(x);
+	}
+	return 0;
+}
+
+int x = 0;
+
+string()() createF2 = () => string() {
+	x = 123;
+	return () => string {
+		return "Hello";
+	};
+};
+
+
+f(createF2(), x == 0 && 2 + 3 == 5, x);

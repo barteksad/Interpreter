@@ -7,7 +7,7 @@ import Control.Monad.Except
 import Control.Monad.Identity
 import Control.Monad.State
     ( modify, evalStateT, MonadState(get), StateT )
-import Data.Map
+import Data.Map ( Map, fromList, insert, lookup )
 import Control.Monad.State.Lazy
 
 ------------------------------------------------------------
@@ -47,6 +47,9 @@ unpacAType (FArgR p t) = FArgR () (unpacType t)
 unpackArg :: Arg -> ATypeT
 unpackArg (VArg p t i) = FArgV () (unpacType t)
 unpackArg (RArg p t i) = FArgR () (unpacType t)
+
+unpackIdent :: Ident -> Var
+unpackIdent (Ident s) = s
 
 runTypeMonad :: TypeMonad a -> Either Err a
 runTypeMonad = runIdentity . runExceptT . flip evalStateT initialEnv
@@ -209,10 +212,10 @@ typeOf (EApp p i args) = do
   case t of
     Fun _ rt ats -> do
       unless (length args == length ats) $
-        throwError $ show p ++ " Wrong number of arguments in function call to " ++ show i ++ ".\nFunction expects " ++ show (length ats) ++ " arguments but " ++ show (length args) ++ " were given."
+        throwError $ show p ++ " Wrong number of arguments in function call to " ++ show (unpackIdent i) ++ ".\nFunction expects " ++ show (length ats) ++ " arguments but " ++ show (length args) ++ " were given."
       mapM_ (uncurry typeCheckArg) (zip ats args)
       return rt
-    _ -> throwError $ show p ++ " Trying to call variable: " ++ show i ++ " which is not a function!"
+    _ -> throwError $ show p ++ " Trying to call variable: " ++ show (unpackIdent i) ++ " which is not a function!"
 
 typeOf (EString _ _) = return $ Str ()
 

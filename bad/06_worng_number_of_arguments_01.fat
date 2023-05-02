@@ -1,0 +1,6 @@
+
+int f(int x, int y, int z) {
+	return 0;
+}
+
+f(1, 2, 3, 4);

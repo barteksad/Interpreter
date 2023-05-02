@@ -201,10 +201,10 @@ runStmt (Abs.SExp p e) = do
 
 runExp :: Abs.Expr -> PStateMonad Value
 
-runExp (Abs.LamDef p arg t body) = do
+runExp (Abs.LamDef p args t body) = do
   penv <- gets penv
   pstate <- gets pstate
-  return (F (Fun [] body penv))
+  return (F (Fun (Prelude.map unpackArg args) body penv))
 
 runExp (Abs.EVar p i) = getVarVal (unpackIdent i)
 
