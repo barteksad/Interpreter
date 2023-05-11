@@ -24,3 +24,4 @@ cabal.project.local~
 .vscode
 test_make
 test_make/*
+interpreter

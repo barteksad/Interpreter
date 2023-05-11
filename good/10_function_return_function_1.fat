@@ -19,7 +19,7 @@ int(ref string, bool) f() {
 
 int(ref string, bool) f = f();
 
-string x = "";
+string x = "works";
 bool b = false;
 
 if(!b) {
