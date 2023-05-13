@@ -1,0 +1,34 @@
+int x = 0;
+int() incr1 = () => int { x++; return x; };
+
+int x = 0;
+int() incr2 = () => int { x++; return x; };
+
+int x = 0;
+int() incr3 = () => int { x++; return x; };
+
+int(int(), int(), int()) product = (int() a, int() b, int() c) => int {
+	return a() * b() * c();
+};
+
+printInt(product(incr1, incr2, incr3));
+printInt(product(incr1, incr2, incr3));
+printInt(product(incr1, incr2, incr3));
+
+# next increment gives x = 10
+while(x < 9) {
+	incr3();
+}
+
+if(product(incr1, incr2, incr3) % 10 == 0) {
+	printString("In deed divisible by 10");
+}
+
+# now x1 = 4, x2 = 4, x3 = 10
+# so this should print (4 + 1) * (4 + 1) * (10 + 1) = 5 * 5 * 11 = 275
+printInt(product(incr1, incr2, incr3));
+
+x = 0;
+# now x1 = 5, x2 = 5, x3 = 0
+# so this should print (5 + 1) * (5 + 1) * (0 + 1) = 6 * 6 * 1 = 36
+printInt(product(incr1, incr2, incr3));
